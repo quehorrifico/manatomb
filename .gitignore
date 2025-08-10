@@ -1,0 +1,17 @@
+# .gitignore
+
+# Go backend dependencies and environment file
+backend/vendor/
+backend/.env
+
+# Node frontend dependencies and environment files
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# macOS specific files
+.DS_Store

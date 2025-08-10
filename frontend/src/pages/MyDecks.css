@@ -1,0 +1,203 @@
+.my-decks-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.create-deck-form, .decks-list {
+  background-color: #242424;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.create-deck-form h2, .decks-list h2 {
+  margin-top: 0;
+  border-bottom: 1px solid #444;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.create-deck-form form {
+  display: flex;
+  gap: 1rem;
+}
+
+.create-deck-form input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #e0e0e0;
+}
+
+.create-deck-form button {
+  padding: 0.75rem 1.5rem;
+  background-color: #6a0dad;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.decks-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deck-list-item {
+  background-color: #1a1a1a;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #6a0dad;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.deck-list-item:hover {
+    background-color: #2d2d2d;
+}
+
+.deck-link-content {
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.deck-link-content h3 {
+  margin: 0 0 0.25rem 0;
+}
+
+.deck-link-content p {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.deck-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.deck-actions button {
+  background: none;
+  border: 1px solid #555;
+  color: #c0c0c0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deck-actions .edit-btn:hover {
+  background-color: #3a5f8a;
+  border-color: #3a5f8a;
+  color: white;
+}
+
+.deck-actions .delete-btn:hover {
+  background-color: #a33a3a;
+  border-color: #a33a3a;
+  color: white;
+}
+
+.edit-deck-form {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    align-items: center;
+}
+
+.edit-deck-form input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #2c2c2c;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #e0e0e0;
+}
+
+.edit-deck-form button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.edit-deck-form .save-btn {
+    background-color: #3a8a5f;
+}
+
+.edit-deck-form .cancel-btn {
+    background-color: #555;
+}
+
+.deck-actions {
+  display: flex;
+  gap: 1rem; /* Increased gap */
+  align-items: center;
+}
+
+/* Styles for the new visibility toggle switch */
+.visibility-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #c0c0c0;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #555;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #6a0dad;
+}
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+.slider.round {
+  border-radius: 24px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}

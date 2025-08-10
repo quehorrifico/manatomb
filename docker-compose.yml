@@ -1,0 +1,27 @@
+# This file defines the services for your local development environment.
+# We are defining a single service: a PostgreSQL database.
+version: '3.8'
+services:
+  db:
+    # Use the official PostgreSQL 16 image from Docker Hub.
+    image: postgres:16-alpine
+    # Always restart the container if it stops.
+    restart: always
+    # Set environment variables for the database.
+    # IMPORTANT: These are used by the PostgreSQL image to initialize the database.
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: manatomb
+    # Map port 5433 on your local machine to port 5432 in the container.
+    # This avoids conflicts with other services running on port 5432.
+    ports:
+      - '5433:5432'
+    # Persist data even if the container is removed.
+    # This creates a 'db-data' volume on your host machine.
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+# Define the volume to be used for data persistence.
+volumes:
+  db-data:

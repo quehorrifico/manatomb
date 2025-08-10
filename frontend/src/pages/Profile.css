@@ -1,0 +1,15 @@
+.profile-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.profile-container h1 {
+    border-bottom: 1px solid #444;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.public-decks-list .deck-link {
+    text-decoration: none;
+    color: inherit;
+}

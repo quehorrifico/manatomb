@@ -1,0 +1,110 @@
+.search-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.search-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #242424;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #e0e0e0;
+}
+
+.search-form button {
+  padding: 0.75rem 1.5rem;
+  background-color: #6a0dad;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-form button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
+  gap: 1.5rem; /* Increased gap */
+  justify-items: center;
+}
+
+.card-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden; /* Ensures children don't overflow rounded corners */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(106, 13, 173, 0.7);
+}
+
+.card-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.add-to-deck-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  transform: translateY(100%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-item:hover .add-to-deck-container {
+  transform: translateY(0);
+}
+
+.add-to-deck-container select {
+  flex-grow: 1;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 0.25rem;
+}
+
+.add-to-deck-container button {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.add-card-message {
+  background-color: #242424;
+  border: 1px solid #6a0dad;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  display: inline-block;
+}

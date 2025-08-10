@@ -1,0 +1,26 @@
+.deck-stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background-color: #242424;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-bottom: 2rem;
+}
+
+.stat-chart {
+    width: 100%;
+}
+
+.stat-chart h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+}
+
+/* Recharts Customization */
+.recharts-text, .recharts-legend-item-text {
+    fill: #c0c0c0;
+}
