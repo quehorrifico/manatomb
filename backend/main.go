@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -75,6 +76,11 @@ func main() {
 	// API Routes (unchanged)
 	api := router.Group("/api")
 	{
+		// Add a simple, public health check route
+		api.GET("/health", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"status": "ok"})
+		})
+
 		authPublic := api.Group("/users")
 		{
 			authPublic.POST("/register", handlers.RegisterUser(dbpool))
