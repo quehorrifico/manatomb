@@ -2,9 +2,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // baseURL: '/api',
   baseURL: process.env.REACT_APP_API_URL,
   headers: { 'Content-Type': 'application/json' },
+  withCredentials: true, // This is the crucial line that was missing
 });
 
 // --- User Auth ---
@@ -25,12 +25,11 @@ export const setDeckVisibility = (deckId, isPublic) => api.put(`/decks/${deckId}
 export const addCardToDeck = (deckId, cardData, board) => api.post(`/decks/${deckId}/cards`, { card: cardData, board: board });
 export const removeCardFromDeck = (deckId, cardId) => api.delete(`/decks/${deckId}/cards/${cardId}`);
 
+// --- Profiles ---
+export const getUserProfile = (username) => api.get(`/profiles/${username}`);
 
 // --- Scryfall API ---
 const scryfallApi = axios.create({ baseURL: 'https://api.scryfall.com' });
 export const searchScryfall = (query) => scryfallApi.get(`/cards/search?q=${encodeURIComponent(query)}`);
-
-// --- Profiles ---
-export const getUserProfile = (username) => api.get(`/profiles/${username}`);
 
 export default api;
