@@ -11,6 +11,7 @@ import (
 	"mana-tomb/backend/handlers"
 	"mana-tomb/backend/middleware"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -67,6 +68,14 @@ func main() {
 
 	// --- Router Setup ---
 	router := gin.Default()
+
+	// --- Add CORS Middleware ---
+	// This tells the backend to accept requests from your frontend domain.
+	// It also allows credentials (like cookies) to be sent.
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"https://manatomb.app"} // Your frontend domain
+	config.AllowCredentials = true
+	router.Use(cors.New(config))
 
 	// Set Gin to release mode in production
 	if os.Getenv("GIN_MODE") == "release" {
