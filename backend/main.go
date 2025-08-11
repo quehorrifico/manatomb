@@ -21,7 +21,7 @@ import (
 var store *sessions.CookieStore
 
 func main() {
-	// --- Load Environment Variables ---
+	// ... (env loading) ...
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("No .env file found, using environment variables from OS")
@@ -34,7 +34,17 @@ func main() {
 	}
 	store = sessions.NewCookieStore([]byte(sessionSecret))
 
-	// --- Database Connection Setup ---
+	// --- THIS IS THE FIX ---
+	// Configure cookie options for production (cross-domain)
+	store.Options = &sessions.Options{
+		Path:     "/",
+		HttpOnly: true,                  // Prevents client-side JS from accessing the cookie
+		Secure:   true,                  // Ensures the cookie is only sent over HTTPS
+		SameSite: http.SameSiteNoneMode, // Allows the cookie to be sent in cross-site requests
+	}
+	// ----------------------
+
+	// ... (database setup) ...
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
@@ -43,20 +53,15 @@ func main() {
 		os.Getenv("DB_NAME"),
 	)
 
-	// Check for the production database certificate.
 	dbCert := os.Getenv("DB_CERT")
 	if dbCert != "" {
-		// If the certificate exists, we're in production.
-		// Write the certificate to a temporary file.
 		certPath := filepath.Join(os.TempDir(), "db-ca-certificate.crt")
 		err := os.WriteFile(certPath, []byte(dbCert), 0644)
 		if err != nil {
 			log.Fatalf("Unable to write database certificate to temp file: %v", err)
 		}
-		// Append SSL options to the connection string.
 		connStr = fmt.Sprintf("%s sslmode=require sslrootcert=%s", connStr, certPath)
 	} else {
-		// Otherwise, we're in local development.
 		connStr = fmt.Sprintf("%s sslmode=disable", connStr)
 	}
 
@@ -69,41 +74,39 @@ func main() {
 	// --- Router Setup ---
 	router := gin.Default()
 
-	// --- Add CORS Middleware ---
-	// This tells the backend to accept requests from your frontend domain.
-	// It also allows credentials (like cookies) to be sent.
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"https://manatomb.app"} // Your frontend domain
+	config.AllowOrigins = []string{"https://manatomb.app"}
 	config.AllowCredentials = true
 	router.Use(cors.New(config))
 
-	// Set Gin to release mode in production
 	if os.Getenv("GIN_MODE") == "release" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// API Routes (unchanged)
+	// ... (API routes are unchanged) ...
 	api := router.Group("/api")
 	{
-		// Add a simple, public health check route
 		api.GET("/health", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"status": "ok"})
 		})
 
-		authPublic := api.Group("/users")
+		auth := api.Group("/users")
 		{
-			authPublic.POST("/register", handlers.RegisterUser(dbpool))
-			authPublic.POST("/login", handlers.LoginUser(dbpool, store))
+			auth.POST("/register", handlers.RegisterUser(dbpool))
+			auth.POST("/login", handlers.LoginUser(dbpool, store))
 		}
+
 		profiles := api.Group("/profiles")
 		{
 			profiles.GET("/:username", handlers.GetUserProfile(dbpool))
 		}
+
 		protected := api.Group("/")
 		protected.Use(middleware.AuthRequired(store))
 		{
 			protected.GET("/users/me", handlers.GetCurrentUser(dbpool))
 			protected.POST("/users/logout", handlers.LogoutUser(store))
+
 			decks := protected.Group("/decks")
 			{
 				decks.POST("/", handlers.CreateDeck(dbpool))
